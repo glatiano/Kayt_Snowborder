@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1677094213 source:c:\users\peppe\documents\github\kayt-snowborder\main.cpp
+	<iostream>
+	<time.h>
+	<fstream>
+	<string>
+	<cctype>
+	<math.h>
+
