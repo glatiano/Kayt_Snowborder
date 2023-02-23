@@ -8,8 +8,8 @@ using namespace std;
 struct partecipante{
     string matricola;
     string cognome;
-    int x1, x2, y1, y2;
-    float distanza;
+    int x1[30], x2[30], y1[30], y2[30];
+    float distanza=0;
 };
 partecipante part[40];
 int righe=0;
@@ -31,20 +31,56 @@ void riempi_vet(){
 }
 void gen_coordinate(){
     cout<<"righe="<<righe<<endl;
-    for(int i=0; i<righe; i++){
-        part[i].x1=rand()%101;
-        part[i].x2=rand()%101;
-        part[i].y1=rand()%101;
-        part[i].y2=rand()%101;
-        part[i].distanza=part[i].distanza*sqrt(pow(part[i].x1-part[i].x2,2)+pow(part[i].y1-part[i].y2,2));
+    for (int f=0; f<righe; f++)
+    {
+        for(int i=0; i<30; i++)
+        {
+            part[f].x1[i]=rand()%101;
+            part[f].x2[i]=rand()%101;
+            part[f].y1[i]=rand()%101;
+            part[f].y2[i]=rand()%101;
+            part[f].distanza=part[i].distanza+sqrt(pow(part[f].x1[i]-part[f].x2[i],2)+pow(part[f].y1[i]-part[f].y2[i],2));
+        }
     }
 }
 void vis_ris(){
+    for (int f=0; f<righe; f++)
+    {
+        cout<<part[f].matricola<<",";
+        cout<<part[f].cognome<<", ";
+        cout<<part[f].distanza<<" km"<<endl;
+    }
 }
 void vis_podio(){
+    partecipante podio[righe];
+    partecipante app;
+    bool b;
+    int a=0;
+    do{
+        b=true;
+        for (int i=a+1; i<righe; i++)
+        {
+            if (part[a].distanza>part[i].distanza)
+                {
+                    app=part[a];
+                    part[a]=part[i];
+                    part[i]=app;
+                    b=false;
+                }
+        }
+    } while (b==false);
+
+    cout<<"righe="<<righe<<endl;
+    cout<<"---------------------------PODIO----------------------------"<<endl;
+    for (int i=0; i<righe; i++)
+    {
+        cout<<part[righe].matricola<<", ";
+        cout<<part[righe].cognome<<", ";
+        cout<<part[righe].distanza<<endl;
+    }
+    cout<<endl<<"-----------------------------------------------------------"<<endl;
 }
 int main(){
-
     srand(time(NULL));
     int s;
     do{
