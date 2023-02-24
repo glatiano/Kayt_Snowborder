@@ -17,7 +17,7 @@ void riempi_vet(){
     string app;
     ifstream fin("gara.txt");
     if (!fin) cout<<"Errore di apertura del file";
-        cout<<"---------------------------GARA----------------------------"<<endl;
+        cout<<"-------PARTECIPANTI GARA---------------"<<endl;
         while (!fin.eof()){
         getline(fin,part[righe].matricola,',');
         cout<<part[righe].matricola<<",";
@@ -26,30 +26,40 @@ void riempi_vet(){
         cout<<endl;
         righe++;
         }
-        cout<<endl<<"-----------------------------------------------------------"<<endl;
+        cout<<"---------------------------------------"<<endl;
     fin.close();
 }
 void gen_coordinate(){
-    cout<<"righe="<<righe<<endl;
+    ofstream fout("garafinita.txt");
     for (int f=0; f<righe; f++)
     {
+        fout<<part[f].matricola<<",";
+        fout<<part[f].cognome<<", ";
         for(int i=0; i<30; i++)
         {
             part[f].x1[i]=rand()%101;
+            fout<<part[f].x1[i]<<", ";
             part[f].x2[i]=rand()%101;
+            fout<<part[f].x2[i]<<"; ";
             part[f].y1[i]=rand()%101;
+            fout<<part[f].y1[i]<<", ";
             part[f].y2[i]=rand()%101;
+            fout<<part[f].y2[i]<<" || ";
             part[f].distanza=part[i].distanza+sqrt(pow(part[f].x1[i]-part[f].x2[i],2)+pow(part[f].y1[i]-part[f].y2[i],2));
         }
+        fout<<part[f].distanza<<endl;
     }
+    fout.close();
 }
 void vis_ris(){
+    cout<<"-------RISULTATI FINALI---------------"<<endl;
     for (int f=0; f<righe; f++)
     {
         cout<<part[f].matricola<<",";
         cout<<part[f].cognome<<", ";
         cout<<part[f].distanza<<" km"<<endl;
     }
+    cout<<"---------------------------------------"<<endl;
 }
 void vis_podio(){
     partecipante podio[righe];
@@ -68,23 +78,25 @@ void vis_podio(){
                     b=false;
                 }
         }
+        a++;
     } while (b==false);
-
-    cout<<"righe="<<righe<<endl;
+    int n=1;
     cout<<"---------------------------PODIO----------------------------"<<endl;
-    for (int i=0; i<righe; i++)
+    for (int i=righe-1; i>righe-4; i--)
     {
-        cout<<part[righe].matricola<<", ";
-        cout<<part[righe].cognome<<", ";
-        cout<<part[righe].distanza<<endl;
+        cout<<n<<"-";
+        cout<<part[i].matricola<<",";
+        cout<<part[i].cognome<<", ";
+        cout<<part[i].distanza<<" km"<<endl;
+        n++;
     }
-    cout<<endl<<"-----------------------------------------------------------"<<endl;
+    cout<<"-----------------------------------------------------------"<<endl;
 }
 int main(){
     srand(time(NULL));
     int s;
     do{
-        cout<<"------- MENU -------"<<endl;
+        cout<<endl<<"------- MENU -------"<<endl;
         cout<<"1 - Visualizza partecipanti"<<endl;
         cout<<"2 - Simula gara"<<endl;
         cout<<"3 - Visualizza risultati finali"<<endl;
@@ -94,17 +106,25 @@ int main(){
         cin>>s;
         switch(s)
         {
-            case 1:
+            case 1:{
+                cout<<endl;
                 riempi_vet();
+            }
             break;
-            case 2:
+            case 2:{
                 gen_coordinate();
+                cout<<endl<<"Gara in corso......."<<endl;
+            }
             break;
-            case 3:
+            case 3:{
+                cout<<endl;
                 vis_ris();
+            }
             break;
-            case 4:
+            case 4:{
+                cout<<endl;
                 vis_podio();
+            }
             break;
         }
     }while(s!=5);

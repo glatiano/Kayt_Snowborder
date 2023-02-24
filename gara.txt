@@ -2,14 +2,14 @@
 23, Ebosse
 19, Ehizibue
 77, Consigli
-9, Colombo 
+09, Colombo 
 24, Ebuehi
 25, Bandinelli
 11, Lookman
 26, Ngonge
 14, Shomurodov
-7, Lammers
+07, Lammers
 18, Ekuban
-2, Ebosele
+02, Ebosele
 42, Hjulmand
 17, Muldur
