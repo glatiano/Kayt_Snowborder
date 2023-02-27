@@ -1,6 +1,6 @@
 /*!
 \file main.cpp
-\brief gara di Kayt-Snowboarder
+\brief Gara di Kayt-Snowboarder
 \author Giuseppe Latiano
 \version 1.0
 \date 26/02/2023
@@ -36,7 +36,7 @@ struct partecipante{
     float distanza=0;
 };
 //! \var part
-//! \brief vettore di tipo partecipante
+//! \brief vettore di tipo partecipante che conterra' matricola, cognome, coordinate, distanza e minutaggio
 partecipante part[40];
 //! \var n_par
 //! \brief utlizzata per contare i partecipanti
@@ -48,10 +48,10 @@ int n_par=0;
 void riempi_vet(){
     ifstream fin("gara.txt"); //! \brief apertura del file gara.txt
     if (!fin) cout<<"Errore di apertura del file";
-        cout<<"-------PARTECIPANTI GARA---------------"<<endl;
-        while (!fin.eof()){ //! \brief ciclo while che leggerà fino alla fine del file
-        getline(fin,part[n_par].matricola,','); //! \brief getline che prenderà tutti i caratteri presenti finchè non incontrerà la virgola
-        cout<<part[n_par].matricola<<",";  //! \brief cout che stamperà la matricola del partecipante
+        cout<<"-----------PARTECIPANTI GARA-----------"<<endl;
+        while (!fin.eof()){ //! \brief ciclo while che leggera' fino alla fine del file
+        getline(fin,part[n_par].matricola,','); //! \brief getline che prendera' tutti i caratteri presenti finche' non incontrera' la virgola
+        cout<<part[n_par].matricola<<",";  //! \brief cout che stampera' la matricola del partecipante
         getline(fin,part[n_par].cognome);
         cout<<part[n_par].cognome;
         cout<<endl;
@@ -62,7 +62,7 @@ void riempi_vet(){
 }
 /*!
 \fn gen_coordinate()
-\brief Funzione utilizzata per generare le coordinate
+\brief Funzione utilizzata per generare le coordinate, il minutaggio e calcolare la distanza
 */
 void gen_coordinate(){
     ofstream fout("garafinita.txt"); //! \brief apertura de file garafinita.txt
@@ -75,7 +75,7 @@ void gen_coordinate(){
         fout<<part[f].x1[0]<<" ; "; //! \brief scrittura nel file della coordinata x1
         fout<<part[f].y1[0]<<" || "; //! \brief scrittura nel file della coordinata y1
         part[f].minutaggio=rand()%11+20; //! \brief randomizzazione del minutaggio di ogni partecipante da 20 a 30
-        for(int i=0; i<part[f].minutaggio; i++) //! \brief for che va da 0 ai minuti in cui è stato in gara il partecipante
+        for(int i=0; i<part[f].minutaggio; i++) //! \brief for che va da 0 ai minuti in cui e' stato in gara il partecipante
         {
             part[f].x1[i]=rand()%101; //! \brief randomizzazione della coordinata x1 da 0 a 100
             fout<<part[f].x1[i]<<" ; "; //! \brief scrittura nel file della coordinata x1
@@ -83,7 +83,7 @@ void gen_coordinate(){
             fout<<part[f].y1[i]<<" || "; //! \brief scrittura nel file della coordinata y1
             part[f].distanza=part[f].distanza+sqrt(pow(part[f].x1[i]-part[f].x1[i-1],2)+pow(part[f].y1[i]-part[f].y1[i-1],2)); //! \brief calcolo della distanza parziale
         }
-        part[f].distanza=part[f].distanza/10; //! \brief distanza divisa per 10 (semplicemente per rendere più credibile il risultato)
+        part[f].distanza=part[f].distanza/100; //! \brief distanza divisa per 100 (semplicemente per rendere piu' credibile il risultato)
         fout<<part[f].distanza<<" km, "; //! \brief scrittura nel file della distanza totale
         fout<<part[f].minutaggio<<" min"<<endl; //! \brief scrittura nel file del minutaggio
     }
@@ -102,35 +102,23 @@ void vis_ris(){
         cout<<part[f].distanza<<" km, "; //! \brief stampa della distanza a video
         cout<<part[f].minutaggio<<" min"<<endl; //! \brief stampa del minutaggio a video
     }
-    cout<<"---------------------------------------"<<endl;
+    cout<<"--------------------------------------"<<endl;
 }
 /*!
 \fn vis_podio()
 \brief Funzione utilizzata per visualizzare il podio
 */
 void vis_podio(){
-    /*!
-    \var app
-    \brief variabile d'appoggio per stampare il podio
-    */
-    partecipante app;
-    /*!
-    \var b
-    \brief variabile per controllare se è avvenuto l'ordinamento
-    */
-    bool b;
-    /*!
-    \var a
-    \brief variabile per il funzionamento dell'algoritmo
-    */
-    int a=0;
-    do{ //! \brief ciclo do while finchè b=false
+    partecipante app; //! \brief app e' la variabile d'appoggio utilizzata per ordinare il podio
+    bool b; //! \brief b e' la variabile utilizzata per controllare se e' avvenuto l'ordinamento
+    int a=0; //! \brief variabile per il funzionamento dell'algoritmo
+    do{ //! \brief ciclo do while finche' b=false
         b=true; //! \brief inizializzazione di b a true
         for (int i=a+1; i<n_par; i++) //! \brief ciclo for che va da i+1 al numero dei partecipanti in gara
         {
-            if (part[a].distanza>part[i].distanza) //! \brief if per controllare se la distanza di un partecipante è maggiore di quella del successivo
+            if (part[a].distanza>part[i].distanza) //! \brief if per controllare se la distanza di un partecipante e' maggiore di quella del successivo
                 {
-                    //! \brief se la condizione dell'if è vera
+                    //! \brief se la condizione dell'if e' vera
                     app=part[a]; //! \brief immagazzinamento in app del partecipante alla posizione a
                     part[a]=part[i]; //! \brief immagazzinamento in part alla posizione a del partecipante alla posizione i
                     part[i]=app; //! \brief immagazzinamento in part alla posizione i la variabile app
@@ -139,9 +127,7 @@ void vis_podio(){
         }
         a++; //! \brief incremento della variabile a
     } while (b==false);
-    //! \var n
-    //! \brief utlizzata per stampare il numero del podio
-    int n=1;
+    int n=1;  //! \brief n e' la variabile utlizzata per stampare il numero del podio
     cout<<"------------------PODIO-------------------"<<endl;
     for (int i=n_par-1; i>n_par-4; i--) //! \brief ciclo for che va da numero dei partecipanti - 1 al numero dei partecipanti - 4 e viene utilizzato per prendere i 3 migliori punteggi
     {
